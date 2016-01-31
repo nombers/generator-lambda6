@@ -1,6 +1,6 @@
 {
   "name": "generator-lambda6",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha",
   "description": "Yeoman generator for creating lambda6 microservices",
   "homepage": "https://github.com/nombers/generator-lambda6",
   "repository": "nombers/generator-lambda6",
