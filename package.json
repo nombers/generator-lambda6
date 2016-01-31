@@ -2,7 +2,9 @@
   "name": "generator-lambda6",
   "version": "0.1.0",
   "description": "Yeoman generator for creating lambda6 microservices",
-  "homepage": "https://github.com/nombers/lambda6",
+  "homepage": "https://github.com/nombers/generator-lambda6",
+  "repository": "nombers/generator-lambda6",
+  "license": "MIT",
   "author": {
     "name": "Matt Marshall",
     "email": "mmarshall@nombers.io",
@@ -13,10 +15,20 @@
   ],
   "main": "generators/index.js",
   "keywords": [
-    ""
+    "aws",
+    "amazon",
+    "lambda",
+    "handler",
+    "es6",
+    "yeoman"
   ],
   "dependencies": {
     "yeoman-generator": "^0.22.4",
     "yosay": "^1.1.0"
+  },
+  "devDependencies": {
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-mocha": "^2.2.0"
   }
 }

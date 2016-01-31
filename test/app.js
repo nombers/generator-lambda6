@@ -1,19 +1,38 @@
 'use strict';
 var path = require('path');
 var assert = require('yeoman-assert');
-var helpers = require('yeoman-generator').test;
+var helpers = require('yeoman-test');
 
 describe('generator-lambda-6:app', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/app'))
-      .withOptions({someOption: true})
-      .withPrompts({someAnswer: true})
+      .withPrompts({
+        appname: 'lambda6-test',
+        version: '0.0.1',
+        description: 'A test project for the Yeoman generator',
+        role: 'arn:::aws:...'
+      })
       .on('end', done);
   });
 
-  it('creates files', function () {
+  it('creates the correct files', function () {
     assert.file([
-      'dummyfile.txt'
+      '.babelrc',
+      '.codeclimate.yml',
+      '.eslintignore',
+      '.eslintrc',
+      '.gitignore',
+      '.npmignore',
+      '.travis.yml',
+      'esdoc.json',
+      'gulpfile.babel.js',
+      'index.js',
+      'lambda.json',
+      'package.json',
+      'README.md',
+      'src/handler.js',
+      'src/index.js',
+      'test/test.js'
     ]);
   });
 });

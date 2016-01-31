@@ -31,39 +31,42 @@ function copyFilesWithContexts(files) {
     if (!(opts instanceof Object)) {
       throw new TypeError('invalid options, must be object: ' + opts);
     }
+    // Generate context (if function), or pass directly
     obj[key] = _copy(opts.src, opts.dest, opts.context);
   }
   return obj;
 }
 
-function getSomething() {
-  console.log(this);
-  return {
-    babelrc: function() {
-      this.fs.copyTpl(
-        this.templatePath('.babelrc'),
-        this.destinationPath('.babelrc')
-      );
+/**
+ * Creates a function to validate an input against a regex and return an error
+ * message if needed.
+ * @param {RegExp} re - the regular expression to use
+ * @returns {Function} function that accepts a string input and returns true if
+ * the input is valid, false otherwise.
+ */
+function regexValidate(re) {
+  return function(input) {
+    if (re.test(input)) {
+      return true;
     }
-  };
-}
-
-function validateServiceName(input) {
-  if (typeof input !== 'string') {
-    this.log.error(chalk.red('\nInvalid service name, must be a string'));
+    this.log.error(chalk.red('\nInvalid input, must match ' + re.toString()));
     return false;
   }
-  const re = /^[a-zA-Z0-9-_]+$/;
-  if (re.test(input)) {
-    return true;
-  }
-  this.log.error(chalk.red('\nInvalid service name, must match ' + re.toString()));
-  return false;
 }
 
+/**
+ * Gets the context used to generate some of the templates.
+ */
 function getContext() {
+  if (!this) {
+    throw new Error('expected this to have value');
+  }
+  // Called with this = generator
   return {
-    appName: 'appName'
+    name: this.opts.appname,
+    role: this.opts.role,
+    version: this.opts.version,
+    description: this.opts.description
   };
 }
 
@@ -76,44 +79,58 @@ module.exports = yeoman.Base.extend({
       'Firing up the Nombers ' + chalk.magenta('lambda6') + ' generator!'
     ));
 
+    // Get package information
     var prompts = [{
       type: 'input',
-      name: 'serviceName',
-      message: 'What is this microservice (Lambda function) going to be called?',
-      // validate: /^[a-zA-Z0-9-_]+$/.test,
-      validate: validateServiceName.bind(this),
+      name: 'appname',
+      message: 'Service/package name?',
+      validate: regexValidate(/^[a-zA-Z0-9-_]+$/).bind(this),
       default: _.camelCase(this.appname)
-    },{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
+    }, {
+      type: 'input',
+      name: 'version',
+      message: 'Version?',
+      validate: regexValidate(/^[0-9]+\.[0-9]+\.[0-9]+$/).bind(this),
+      default: '0.0.1'
+    }, {
+      type: 'input',
+      name: 'description',
+      message: 'Description?'
+    }, {
+      type: 'input',
+      name: 'role',
+      message: 'Role ARN?'
     }];
 
     this.prompt(prompts, function (props) {
-      this.props = props;
-      // To access props later use this.props.someOption;
-
+      this.opts = props;
       done();
     }.bind(this));
   },
 
-  writing: copyFilesWithContexts({
+  writing: copyFilesWithContexts.call(this, {
     // Babel
     babelrc:      { src: '_.babelrc',         dest: '.babelrc' },
+    // ESDoc
+    esdoc:        { src: 'esdoc.json',        dest: 'esdoc.json' },
     // ESLint
     eslintignore: { src: '_.eslintignore',    dest: '.eslintignore' },
     eslintrc:     { src: '_.eslintrc',        dest: '.eslintrc' },
     // Git
     gitignore:    { src: '_.gitignore',       dest: '.gitignore' },
-    // Gulpfile and
-    gulpfile:     { src: 'gulpfile.ejs',      dest: 'gulpfile.babel.js', context: getContext.call(this) },
-    package:      { src: 'package.ejs',       dest: 'package.json',      context: getContext.call(this) },
+    // npm
+    npmignore:    { src: '_.npmignore',       dest: '.npmignore' },
+    // Gulpfile, package and lambda.json
+    gulpfile:     { src: 'gulpfile.babel.js', dest: 'gulpfile.babel.js' },
+    package:      { src: 'package.ejs',       dest: 'package.json', context: getContext },
+    lambda:       { src: 'lambda.ejs',        dest: 'lambda.json',  context: getContext },
     // JavaScript Source Code
     index:        { src: 'index.js',          dest: 'index.js' },
     src_handler:  { src: 'src/handler.js',    dest: 'src/handler.js' },
     src_index:    { src: 'src/index.js',      dest: 'src/index.js' },
     test_test:    { src: 'test/test.js',      dest: 'test/test.js' },
+    // README
+    readme:       { src: 'README.ejs',        dest: 'README.md',   context: getContext },
     // Travis CI and CodeClimate
     travis:       { src: '_.travis.yml',      dest: '.travis.yml' },
     codeclimate:  { src: '_.codeclimate.yml', dest: '.codeclimate.yml' },

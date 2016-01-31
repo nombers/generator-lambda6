@@ -7,5 +7,5 @@ import Handler from './handler';
  * @param {Object} context - the AWS Lambda context
  */
 export function handler(event, context) {
-  return Handler.handle(event, context);
+  return new Handler().handle(event, context);
 }
