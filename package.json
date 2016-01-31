@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "chalk": "^1.1.1",
+    "lodash": "^4.1.0",
     "yeoman-generator": "^0.22.4",
     "yosay": "^1.1.0"
   },
