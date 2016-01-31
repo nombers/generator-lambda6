@@ -1,4 +1,5 @@
 # lambda6 Yeoman Generator
+[![Build Status](https://travis-ci.org/nombers/lambda6.svg)](https://travis-ci.org/nombers/generator-lambda6)
 Easily create [lambda6](https://github.com/nombers/lambda6) microservices using this generator for [Yeoman](https://github.com/yeoman/yeoman). If you aren't familiar with Yeoman, it's a scaffolding tool that helps developers eliminate the boilerplate tasks of setting up a new Node.js project. Check it out!
 
 ## Quick Start
