@@ -1,16 +1,15 @@
 language: node_js
 node_js:
-  - v4
+- v4
 before_install:
-  - npm install -g gulp
+- npm install -g gulp
 script:
-  - gulp
+- gulp
 deploy:
   provider: npm
   email: mmarshall@nombers.io
   api_key:
-    secure: LW+Emt+HZX2uHFu+b0CimW6+MmpZ78wncb2z1t7agPvMBTh2FuN1Up83n17ZKcwhHSzhoh9HNNEsjjOgls9VocXEwHJqkjGwFeZoFDX+f1ErHwCn9dN/lOd1kAy7zPFPBiL7UEj4qo6wnzIg/yrftb2Ys5mdp1n3E7cqolcB6BVQfAYjBey5DRN3IRLAbFMGWjoAKWrFPIJj7EQnxUE6HObAWydhwYTX2kac84wUFIJOU6Mk9g9NKfxj4xgGproom/vNn0DbcuuAQ0gQhO+vOG90zo+4M32EnFB6hykc35w00C6H9S5LSC/zRRaygzTuHZPyCOXOnGSThEJg+wu1ldZ9jjIaXOqu/OTMFDgBKrnfa6ocY4TQbpmT2vEqCbON0VCijBZ3IDHXsMi0ZJ7p7LPEJO7Pd1aBal7zNHEspw68KytsuQFnIS3TAyC38enV7P957f+wCx7qrnufAV0sSqCDE4S0oBAlTqzbqDZCo5u7ak771Prrs8sciF8GJ5I21PIhcoaycIlisjemdNp8aOMUek5DKcHoubExjWEdYzrCww6GKfGJVU8S1sSglXiR7iC4SwmlOz6PTrviH0zJPkGYJyiNciAO/lCR5umqBfBYMc5ZXMoyTygt1Q/SRYCYYETgavFzq7PjcHxDolZkWGxJ9PkAsolNrEpxn1UfLSQ=
+    secure: diLspB69D5drGXyiJSpaQrdLbLKkQi8eS+/9vGmqpzh928g1ASm6pN64+VwA4qBRNvJO1IgfesPODC3d1mh5mkSYLU4bY/UZJNmgR+eCIc6TgoAwMaZjyoo8erx74mBh/9tZC3a5j+DcVgOsSO+fAI7fNKiqHDx0x0mcDp9TXTymRBlUz5gUJvIzTdspQKoE3Y7Jt6/2svnpIoOEfx39y9oahRN56YJrBhwVtHlxXH4dFo7Qx8T9cZQgYipw6xxHgDWAWP1dL+My9U7TS+PyetsA6p9Stu4qm9COv49OcJZdPNrajBJYX1qudSohnW2AR7s2Nk3o2x9pJpDijTRN/P5/Mmkfd3olZDsY5KFj2oaQ0hrlwjuwwbD5GrkNIxRkNL5Aasp6kmEIag83o2lTGSwnef/Y3UEuoRwvPaVo7RBtGGto4DnxG1XgdPE3he9cxfCjobn1hMDKZ+Qu4K8FF5G9jbfDHt03D/IM4iG03m93T3jUCQ70JhgG7MhX/uvRCr6ovrmQOWbrc70Iy5wsVoxMwsaZMcYDxBH7m7LyldQ/hS0BXgbct7rOUB+ZTGYb70Zoxs7xgnx4N010I+Bk2sW142exyfKiHXZVyJkW9sv8r2mk/PToqekl13GIIoi1L7I0/oRooL8WsHkG8JzkwVQw13diq2f+wlZr32ZFLNo=
   on:
-    repo: nombers/generator-lambda6
     tags: true
-    branch: master
+    repo: nombers/generator-lambda6
